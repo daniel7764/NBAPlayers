@@ -1,0 +1,13 @@
+.PlayersList {
+    width: 15vw;
+}
+
+.Title {
+    font-size: 2.5rem;
+    display: flex;
+    justify-content: center;
+}
+
+.ColorPicker {
+    margin-left: 1vw;
+}
