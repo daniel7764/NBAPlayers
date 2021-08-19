@@ -1,4 +1,4 @@
-export interface Player {
+export type Player = {
     firstName: string,
     lastName: string,
     position: string,
