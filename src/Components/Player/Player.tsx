@@ -1,13 +1,19 @@
 import React from 'react';
 import { ListItem, Checkbox, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 
-import useSinglePlayer from './useSinglePlayer';
-import Player from '../../Types/Player';
+import usePlayer from './usePlayer';
+import { Player as PlayerType} from '../../Types/Player';
 
-const NA: string = 'N/A'
+const NA: string = 'N/A';
 
-const SinglePlayer: React.FC<Props> = (props: Props) => {
-    const { alterFavorites } = useSinglePlayer();
+interface Props {
+    playerToDisplay: PlayerType,
+    showCheckBox: boolean,
+    forwardref?: any,
+}
+
+const Player: React.FC<Props> = (props: Props) => {
+    const { addFavoritePlayer, removeFavoritePlayer } = usePlayer();
     const { firstName, lastName, feet, inches, weight, position, team} = props.playerToDisplay;
 
     const getFullHeight = () => {
@@ -18,7 +24,7 @@ const SinglePlayer: React.FC<Props> = (props: Props) => {
     }
 
     const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-        alterFavorites(props.playerToDisplay, checked);
+        checked ? addFavoritePlayer(props.playerToDisplay) : removeFavoritePlayer(props.playerToDisplay);
     }
 
     return (
@@ -44,10 +50,4 @@ const SinglePlayer: React.FC<Props> = (props: Props) => {
     );
 }
 
-export default SinglePlayer;
-
-interface Props {
-    playerToDisplay: Player,
-    showCheckBox: boolean,
-    forwardref?: any,
-}
+export default Player;

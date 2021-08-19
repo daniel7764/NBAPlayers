@@ -3,16 +3,20 @@ import { Menu, MenuItem, Button } from '@material-ui/core';
 
 const colors: string[] = ['white', 'blue', 'green', 'red', 'purple', 'pink', 'brown', 'yellow']
 
+interface Props {
+    setBackgroundColor: React.Dispatch<React.SetStateAction<string>>
+}
+
 const ColorPicker: React.FC<Props> = (props: Props) => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-    const { setCurrBackgroundColor} = props;
+    const { setBackgroundColor } = props;
 
     const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
     }
 
     const handleColorPick = (event: React.MouseEvent<HTMLElement>) => {
-        setCurrBackgroundColor(event.currentTarget.innerText);
+        setBackgroundColor(event.currentTarget.innerText);
         handleClose();
     }
 
@@ -38,8 +42,3 @@ const ColorPicker: React.FC<Props> = (props: Props) => {
 }
 
 export default ColorPicker;
-
-interface Props {
-    currBackgroundColor: string;
-    setCurrBackgroundColor: React.Dispatch<React.SetStateAction<string>>
-}

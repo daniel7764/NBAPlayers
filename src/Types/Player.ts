@@ -1,4 +1,4 @@
-interface Player {
+export interface Player {
     firstName: string,
     lastName: string,
     position: string,
@@ -7,5 +7,3 @@ interface Player {
     weight: number,
     team: string,
 }
-
-export default Player;

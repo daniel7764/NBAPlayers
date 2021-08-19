@@ -3,14 +3,14 @@ import React, { useState, useRef, useCallback } from 'react';
 
 import '../ListStyles.css';
 import usePlayers from './usePlayers';
-import SinglePlayer from '../SinglePlayer/SinglePlayer';
+import Player from '../Player/Player';
 
 const Players: React.FC = () => {
     const observer = useRef<IntersectionObserver>();
     const [page, setPage] = useState<number>(0);
     const { players, hasMore, isLoading } = usePlayers({page});
 
-    const lastPlayerElementRef = useCallback((node) => {
+    const lastPlayerElementRef = useCallback((node: Element) => {
         if(isLoading) return;
         observer.current &&
             observer.current.disconnect();
@@ -30,8 +30,8 @@ const Players: React.FC = () => {
                 {
                     players.map((player, index) => { 
                         return players.length === index + 1 ?
-                            <SinglePlayer playerToDisplay={player} showCheckBox={true} forwardref={lastPlayerElementRef}/> :
-                            <SinglePlayer playerToDisplay={player} showCheckBox={true}/>
+                            <Player playerToDisplay={player} showCheckBox={true} forwardref={lastPlayerElementRef}/> :
+                            <Player playerToDisplay={player} showCheckBox={true}/>
                     })
                 }
             </List>
