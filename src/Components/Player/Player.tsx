@@ -7,8 +7,8 @@ import { Player as PlayerType} from '../../Types/Player';
 const NA: string = 'N/A';
 
 interface Props {
-    playerToDisplay: PlayerType,
-    showCheckBox: boolean,
+    playerToDisplay: PlayerType;
+    showCheckBox: boolean;
 }
 
 const Player: React.FC<Props> = (props: Props) => {
