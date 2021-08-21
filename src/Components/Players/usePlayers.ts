@@ -14,7 +14,6 @@ interface usePlayersInput {
 }
 
 interface usePlayersOutput {
-    hasMore: boolean;
     pageCount: number;
     isLoading: boolean;
     players: PlayerType[];
@@ -29,7 +28,6 @@ const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
     const [pageCount, setPageCount] = useState<number>(0);
     const [searchedName, setSearchedName] = useState<string>('');
     const [playersFoundByName, setPlayersFoundByName] = useState<PlayerType[]>([]);
-    const [hasMore, setHasMore] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const getPlayers = async () => {
@@ -53,7 +51,6 @@ const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
                 setPageCount(response.data.meta.total_pages);
             }
             setPlayers([...players, ...allPlayersMapped]);
-            setHasMore(response.data.data.length > 0);
             setIsLoading(false);
         }
     }
@@ -80,7 +77,7 @@ const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
 
     useEffect(() => { getPlayers() }, [page])
 
-    return { hasMore, isLoading, players, searchedName, setSearchedName, playersFoundByName, pageCount }
+    return { isLoading, players, searchedName, setSearchedName, playersFoundByName, pageCount }
 }
 
 export default usePlayers;
