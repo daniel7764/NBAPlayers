@@ -9,7 +9,6 @@ const NA: string = 'N/A';
 interface Props {
     playerToDisplay: PlayerType,
     showCheckBox: boolean,
-    forwardref?: any,
 }
 
 const Player: React.FC<Props> = (props: Props) => {
@@ -28,7 +27,7 @@ const Player: React.FC<Props> = (props: Props) => {
     }
 
     return (
-        <ListItem ref={props.forwardref}>
+        <ListItem>
             <ListItemIcon>
                 {
                     props.showCheckBox &&

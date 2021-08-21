@@ -1,5 +1,6 @@
 import axios from 'axios';
-import {useState, useEffect} from 'react';
+import Swal from 'sweetalert2';
+import React, {useState, useEffect} from 'react';
 
 import { Player as PlayerType} from '../../Types/Player';
 import { FullPlayerData } from '../../Types/FullPlayerData';
@@ -13,14 +14,21 @@ interface usePlayersInput {
 }
 
 interface usePlayersOutput {
-    hasMore: boolean,
-    isLoading: boolean,
-    players: PlayerType[]
+    hasMore: boolean;
+    pageCount: number;
+    isLoading: boolean;
+    players: PlayerType[];
+    playersFoundByName: PlayerType[];
+    searchedName: string;
+    setSearchedName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
     const { page } = playersInput;
     const [players, setPlayers] = useState<PlayerType[]>([]);
+    const [pageCount, setPageCount] = useState<number>(0);
+    const [searchedName, setSearchedName] = useState<string>('');
+    const [playersFoundByName, setPlayersFoundByName] = useState<PlayerType[]>([]);
     const [hasMore, setHasMore] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -33,10 +41,17 @@ const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
             }
         })
         if(response.status !== OK_STATUS || !response.data.data) {
-
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Error fetching data from the Api',
+              })
         }
         else {
             const allPlayersMapped: PlayerType[] = mapPlayersToArray(response.data.data);
+            if(response.data.meta.current_page === 1) {
+                setPageCount(response.data.meta.total_pages);
+            }
             setPlayers([...players, ...allPlayersMapped]);
             setHasMore(response.data.data.length > 0);
             setIsLoading(false);
@@ -57,9 +72,15 @@ const usePlayers = (playersInput: usePlayersInput): usePlayersOutput => {
         })
     }
 
+    useEffect(() => {
+        const playersToSearch: PlayerType[] = players;
+        const playersByName: PlayerType[] = playersToSearch.filter(p => p.firstName.includes(searchedName) || p.lastName.includes(searchedName));
+        setPlayersFoundByName([...playersByName]); 
+    }, [searchedName]);
+
     useEffect(() => { getPlayers() }, [page])
 
-    return { hasMore, isLoading, players }
+    return { hasMore, isLoading, players, searchedName, setSearchedName, playersFoundByName, pageCount }
 }
 
 export default usePlayers;
