@@ -1,19 +1,19 @@
 import React from 'react';
 import { ListItem, Checkbox, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
 
-import usePlayer from './usePlayer';
-import { Player as PlayerType} from '../../Types/Player';
+import { Player as PlayerType} from '../../types/Player';
 
 const NA: string = 'N/A';
 
 interface Props {
     playerToDisplay: PlayerType;
     showCheckBox: boolean;
+    handleFavoriteStatusChange?: (fav: boolean, playerChanged: PlayerType) => void;
 }
 
 const Player: React.FC<Props> = (props: Props) => {
-    const { addFavoritePlayer, removeFavoritePlayer } = usePlayer();
-    const { firstName, lastName, feet, inches, weight, position, team} = props.playerToDisplay;
+    const {isFav, firstName, lastName, feet, inches, weight, position, team} = props.playerToDisplay;
+    const { handleFavoriteStatusChange } = props;
 
     const getFullHeight = () => {
         if(feet && inches) {
@@ -23,7 +23,8 @@ const Player: React.FC<Props> = (props: Props) => {
     }
 
     const handleCheckBox = (event: React.ChangeEvent<HTMLInputElement>, checked: boolean) => {
-        checked ? addFavoritePlayer(props.playerToDisplay) : removeFavoritePlayer(props.playerToDisplay);
+        handleFavoriteStatusChange &&
+            handleFavoriteStatusChange(checked, props.playerToDisplay);
     }
 
     return (
@@ -31,7 +32,7 @@ const Player: React.FC<Props> = (props: Props) => {
             <ListItemIcon>
                 {
                     props.showCheckBox &&
-                        <Checkbox onChange={handleCheckBox}/>
+                        <Checkbox onChange={handleCheckBox} checked={isFav}/>
                 }
             </ListItemIcon>
             <ListItemText

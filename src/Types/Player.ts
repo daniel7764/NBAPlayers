@@ -1,4 +1,6 @@
 export type Player = {
+    id: number;
+    isFav: boolean;
     firstName: string;
     lastName: string;
     position: string;

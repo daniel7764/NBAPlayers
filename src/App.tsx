@@ -1,9 +1,9 @@
 import { Divider } from '@material-ui/core';
 
 import './App.css';
-import Players from '../src/Components/Players/Players';
-import Favorites from '../src/Components/Favorites/Favorites';
-import FavoritePlayersProvider from './Context/FavoritePlayersContext';
+import Players from './modules/Players/Players';
+import Favorites from './modules/Favorites/Favorites';
+import FavoritePlayersProvider from './context/FavoritePlayersContext';
 
 const App = () => {
   return (
