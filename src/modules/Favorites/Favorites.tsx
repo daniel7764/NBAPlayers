@@ -2,8 +2,8 @@ import React, { useContext, useState } from 'react';
 import { List, Typography } from '@material-ui/core';
 
 import '../ListStyles.css';
-import Player from '../../components/Player/Player';
-import ColorPicker from '../../components/ColorPicker/ColorPicker';
+import Player from '../../components/player/Player';
+import ColorPicker from '../../components/colorpicker/ColorPicker';
 import { FavoritePlayersContext } from '../../context/FavoritePlayersContext';
 import FavoritePlayersContextType from '../../context/FavoritePlayersContextType';
 

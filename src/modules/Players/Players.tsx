@@ -4,8 +4,8 @@ import { List, Typography } from '@material-ui/core';
 
 import '../ListStyles.css';
 import usePlayers from './usePlayers';
-import Player from '../../components/Player/Player';
-import Search from '../../components/Search/Search';
+import Player from '../../components/player/Player';
+import Search from '../../components/search/Search';
 
 const Players: React.FC = () => {
     const [page, setPage] = useState<number>(1);
